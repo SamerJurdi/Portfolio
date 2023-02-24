@@ -5,7 +5,7 @@ import getStyles from '../styles/Home.module.css'
 export default function Layout({ children }) {
     const styles = getStyles()
 	return (
-		<div>
+		<div style={{position: 'relative'}}>
 			<Head>
 				<title>This is a title</title>
 				<link rel="icon" href="/logo.svg" /* logo => Next.js icon by icons8.com */ />
@@ -15,7 +15,7 @@ export default function Layout({ children }) {
                 src="/subtle-prism.svg" /* Background by SVGBackgrounds.com */
                 quality="100"
                 fill
-                sizes="100vw"
+                priority
                 style={{
                     objectFit: 'cover',
                     zIndex: '-1',

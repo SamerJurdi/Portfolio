@@ -1,4 +1,4 @@
-.next
-.vs
-node_modules
+.next/
+.vs/
+node_modules/
 .env
