@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import getStyles from '../styles/Home.module.css'
+import getStyles from '../styles/home.module.css'
 
-export default function Layout({ children }) {
+export default function Layout({ children, position = 'relative' }) {
     const styles = getStyles()
 	return (
-		<div style={{position: 'relative'}}>
+        <div style={{ position: position }}>
 			<Head>
 				<title>This is a title</title>
 				<link rel="icon" href="/logo.svg" /* logo => Next.js icon by icons8.com */ />

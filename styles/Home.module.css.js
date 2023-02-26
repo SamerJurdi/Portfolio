@@ -1,9 +1,12 @@
 export default function getStyles(props) {
+	const direction = props?.direction ? props.direction : 'ltr'
+
 	return {
 		container: {
-			paddingLeft: '20%',
-			paddingRight: '20%',
+			paddingLeft: '10%',
+			paddingRight: '10%',
 			paddingTop: '5%',
+			paddingBottom: '5%',
 		},
 		main: {
             justifyContent: 'center',

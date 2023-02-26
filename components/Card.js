@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import getStyles from '../styles/Home.module.css'
+import getStyles from '../styles/home.module.css'
 
 export default function Card({ children, url = '/' }) {
     const styles = getStyles()
@@ -20,7 +20,7 @@ export default function Card({ children, url = '/' }) {
 					...{ borderRadius: '20px', paddingTop: '20px', paddingRight: '20px', paddingLeft: '20px' }
 				}}>
 				{ children }
-				{/* TODO: Add arrow pointing to the right side */}
+				{/* TODO: Add arrow pointing to the right side, from fontawesome */}
 			</div>
 		</Link>
 	</div>
