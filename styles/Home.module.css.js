@@ -12,10 +12,18 @@ export default function getStyles(props) {
             justifyContent: 'center',
 		},
 		cardContainer: {paddingTop: '10px', paddingBottom: '10px'},
-		card: {
+		cardLink: {
 			color: 'inherit',
 			textDecoration: 'inherit',
-			borderRadius: '20px'
+			borderRadius: '20px',
 		},
+		card: {
+			borderRadius: '20px',
+			paddingTop: '20px',
+			paddingRight: '20px',
+			paddingLeft: '20px',
+			border: '1px dotted gray',
+		},
+		cardSelected: {border: '1px solid black'},
 	}
 }

@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model UserAccount {
+  UserId            Int       @id @default(autoincrement())
+  FirstName         String    @db.VarChar(255)
+  LastName          String    @db.VarChar(255)
+  Email             String    @unique(map: "Email") @db.VarChar(255)
+  HashKey           String    @db.VarChar(255)
+  CreatedDate       DateTime? @default(now()) @db.DateTime(0)
+  LastEdited        DateTime? @default(now()) @db.DateTime(0)
+  RemainingAttempts Int?      @default(5) @db.TinyInt
+}
+
+model vt_HOLD_126e77f2c90356d691095c6e3cf77b29_20230227210123 {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  @@map("_vt_HOLD_126e77f2c90356d691095c6e3cf77b29_20230227210123")
+}
+
+model vt_HOLD_9c03751716025e68ac4f7c2ae9b3b1bf_20230227210124 {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(255)
+  image_url   String? @db.VarChar(255)
+  category_id Int?
+
+  @@index([category_id], map: "category_id_idx")
+  @@map("_vt_HOLD_9c03751716025e68ac4f7c2ae9b3b1bf_20230227210124")
+}
+
+model dccca3ef_b075_5080_8e01_4ba155d633c3_20230226220922_vrepl {
+  UserId      Int       @id @default(autoincrement())
+  FirstName   String    @db.VarChar(255)
+  LastName    String    @db.VarChar(255)
+  Email       String    @unique(map: "Email") @db.VarChar(255)
+  HashKey     String    @db.VarChar(255)
+  CreatedDate DateTime? @default(now()) @db.DateTime(0)
+  LastEdited  DateTime? @default(now()) @db.DateTime(0)
+
+  @@map("_dccca3ef_b075_5080_8e01_4ba155d633c3_20230226220922_vrepl")
+}

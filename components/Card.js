@@ -9,15 +9,15 @@ export default function Card({ children, url = '/' }) {
 	const [isHovering, setIsHovering] = useState(false)
 	return (
 	<div style={styles.cardContainer}>
-		<Link href={url} style={styles.card}>
+		<Link href={url} style={styles.cardLink}>
 			<div
 				onMouseEnter={() => setIsHovering(true)}
 				onMouseLeave={() => setIsHovering(false)}
 				onClick={() => setIsHovering(true)}
 				onMouseUp={() => setIsHovering(false)}
 				style={{
-					...(isHovering ? {border: '1px solid gray'} : {border: 'none'}),
-					...{ borderRadius: '20px', paddingTop: '20px', paddingRight: '20px', paddingLeft: '20px' }
+					...styles.card,
+					...(isHovering && styles.cardSelected),
 				}}>
 				{ children }
 				{/* TODO: Add arrow pointing to the right side, from fontawesome */}

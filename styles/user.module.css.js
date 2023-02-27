@@ -8,6 +8,7 @@ export default function getUserStyles(props) {
             gridTemplateColumns: '1fr 1fr',
             alignItems: 'center',
             justifyContent: 'center',
+            justifyItems: 'center',
             paddingBottom: '5px',
             direction,
         },
@@ -40,5 +41,12 @@ export default function getUserStyles(props) {
         tabButtonSelectedL: {
             background: 'linear-gradient(-45deg, lightBlue, transparent)',
         },
+        button: {
+            borderRadius: '25px',
+            border: '1px solid gray',
+            background: 'lightcyan',
+            width: '120px',
+            padding: '4px',
+        }
     }
 }

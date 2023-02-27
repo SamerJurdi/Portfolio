@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import { handleResponse, showValidationMessage } from '../lib/common'
@@ -6,10 +7,20 @@ import getUserStyles from '../styles/user.module.css'
 const userStyles = getUserStyles()
 
 export default function login() {
+    const router = useRouter()
 
     function onSubmit(values) {
-        console.log('Form Submitted')
-        console.log(values)
+        const objectWithData = {
+            email: values.email,
+            password: values.password,
+        }
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(objectWithData),
+        }).then(async response => handleResponse(await response.json(), router))
     }
 
     const formValidationSchema = yup.object().shape({
@@ -26,10 +37,8 @@ export default function login() {
                 }}
                 validationSchema={formValidationSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        onSubmit(values)
-                        setSubmitting(false)
-                    }, 400);
+                    onSubmit(values)
+                    setSubmitting(false)
                 }}
             >
                 {({
@@ -68,7 +77,7 @@ export default function login() {
                             </div>
                         </div>
 
-                        <button type="submit" disabled={isSubmitting}>
+                        <button type="submit" disabled={isSubmitting} style={userStyles.button}>
                             Log In
                         </button>
                     </form>
