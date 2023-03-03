@@ -38,7 +38,7 @@ export default function NavBar({ navItems, userItems, isLoggedIn }) {
             setUserDrawerIsOpen(false)
         }}>
             <nav style={styles.nav}>
-                <FontAwesomeIcon icon={faBars} style={styles.navBars}
+                <FontAwesomeIcon icon={faBars}
                     onClick={() => {
                         setIsNavActive(!isNavActive)
                         setUserDrawerIsOpen(false)

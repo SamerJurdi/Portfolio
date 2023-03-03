@@ -31,9 +31,8 @@ export default function getStyles(props) {
 			justifyContent: 'space-between',
 			alignItems: 'center',
 			backgroundColor: 'lightblue',
-			zIndex: '2',
+			height: '60px',
 		},
-		navBars: {maxHeight: '30px'},
 		navUser: showUserDrawer ? {maxHeight: '30px'} : { display: 'none' },
 		navList: {
 			display: 'flex',
