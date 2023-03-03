@@ -33,7 +33,7 @@ export default async function handle(req, res) {
 					await req.session.save()
 					res.status(200).send({redirect: '/'})
 				})
-			} catch (err) {
+			} catch (error) {
 				res.status(200).send({ error, message: 'Error: ' + error })
 			}
 		} else res.status(200).send({ error: true, message: 'You already have an account!' })

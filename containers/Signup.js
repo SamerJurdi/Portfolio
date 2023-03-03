@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Formik } from 'formik'
 import * as yup from 'yup'
@@ -8,8 +9,10 @@ const userStyles = getUserStyles()
 
 export default function login() {
     let router = useRouter()
+    const [isLoading, setIsLoading] = useState(false)
 
     function onSubmit(values) {
+        setIsLoading(true)
         const objectWithData = {
             firstName: values.firstName,
             lastName: values.lastName,
@@ -22,7 +25,10 @@ export default function login() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(objectWithData),
-        }).then(async response => handleResponse(await response.json(), router))
+        }).then(async response => {
+            setIsLoading(false)
+            handleResponse(await response.json(), router)
+        })
     }
 
     const formValidationSchema = yup.object().shape({
@@ -129,7 +135,7 @@ export default function login() {
                         </div>
 
                         <button type="submit" disabled={isSubmitting} style={userStyles.button}>
-                            Sign Up
+                            {isLoading ? 'Loading...' : 'Sign Up'}
                         </button>
                     </form>
                 )}

@@ -39,7 +39,7 @@ async function login(req, res) {
 						req.session.user = { userId: user.UserId }
 						await req.session.save()
 						await updateLoginAttempts(user.UserId, 5)
-						res.status(200).send({ message: 'Login Successful', redirect: '/' })
+						res.status(200).send({ redirect: '/ecommerce' })
 					} else {
 						await updateLoginAttempts(user.UserId, user.RemainingAttempts - 1)
 						res.status(200).send({ error: true, message: 'Login Failed' })
@@ -47,7 +47,7 @@ async function login(req, res) {
 				} catch (error) {
 					res.status(200).send({ error, message: 'Error: ' + error })
 				}
-			} else res.send(200).send({ error: true, message: 'Account Locked' })
-		} else res.send(200).send({ error: true, message: 'User not found' })
+			} else res.status(200).send({ error: true, message: 'Account Locked' })
+		} else res.status(200).send({ error: true, message: 'User not found' })
 	} else return res.status(404).send({ error: true })
 }

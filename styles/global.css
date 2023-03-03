@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+* {
+    outline: none;
+    box-sizing: border-box;
+}
+.products {
+    border: 1px solid black;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    background: linear-gradient(45deg, lightblue, transparent);
+}
+
+.transactionRecord {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+    height: 50px;
+    align-content: center;
+    border: 1px solid black;
+}
+@media screen and (min-width: 470px) {
+    .transactionRecord {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .products {
+        grid-template-columns: 1fr 1fr 1fr;
+        border-radius: 20px;
+    }
+}

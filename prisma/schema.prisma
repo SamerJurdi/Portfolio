@@ -9,41 +9,132 @@ datasource db {
 }
 
 model UserAccount {
-  UserId            Int       @id @default(autoincrement())
-  FirstName         String    @db.VarChar(255)
-  LastName          String    @db.VarChar(255)
-  Email             String    @unique(map: "Email") @db.VarChar(255)
-  HashKey           String    @db.VarChar(255)
-  CreatedDate       DateTime? @default(now()) @db.DateTime(0)
-  LastEdited        DateTime? @default(now()) @db.DateTime(0)
-  RemainingAttempts Int?      @default(5) @db.TinyInt
+  UserId            Int          @id @default(autoincrement())
+  FirstName         String       @db.VarChar(255)
+  LastName          String       @db.VarChar(255)
+  Email             String       @unique(map: "Email") @db.VarChar(255)
+  HashKey           String       @db.VarChar(255)
+  CreatedDate       DateTime?    @default(now()) @db.DateTime(0)
+  LastEdited        DateTime?    @default(now()) @db.DateTime(0)
+  RemainingAttempts Int?         @default(5) @db.TinyInt
+  UserWallet        UserWallet[] @relation("UserWallet")
 }
 
-model vt_HOLD_126e77f2c90356d691095c6e3cf77b29_20230227210123 {
-  id   Int    @id @default(autoincrement())
-  name String @db.VarChar(255)
-
-  @@map("_vt_HOLD_126e77f2c90356d691095c6e3cf77b29_20230227210123")
+model Category {
+  CategoryId       Int               @id @default(autoincrement()) @db.UnsignedInt
+  ParentCategoryId Int?              @db.UnsignedInt @unique
+  Name             String            @db.TinyText
+  ParentCategory   Category?         @relation("ParentChild", fields: [ParentCategoryId], references: [CategoryId], onDelete: NoAction, onUpdate: NoAction)
+  Category         Category?         @relation("ParentChild")
+  ProductCategory  ProductCategory[] @relation("ProdCategory")
 }
 
-model vt_HOLD_9c03751716025e68ac4f7c2ae9b3b1bf_20230227210124 {
-  id          Int     @id @default(autoincrement())
-  name        String  @db.VarChar(255)
-  image_url   String? @db.VarChar(255)
-  category_id Int?
-
-  @@index([category_id], map: "category_id_idx")
-  @@map("_vt_HOLD_9c03751716025e68ac4f7c2ae9b3b1bf_20230227210124")
+model Currency {
+  CurrencyId       Int                @id @default(autoincrement()) @db.UnsignedInt
+  CurrencyIso      String             @unique(map: "CurrencyIso") @db.VarChar(10)
+  TypeId           Int                @db.UnsignedInt
+  Name             String             @db.TinyText
+  Description      String?            @db.Text
+  ProductPrice     ProductPrice[]     @relation("PriceCurrency")
+  UserWallet       UserWallet[]       @relation("WalletCurrency")
+  InvoiceReference InvoiceReference[] @relation("InvoiceCurrency")
 }
 
-model dccca3ef_b075_5080_8e01_4ba155d633c3_20230226220922_vrepl {
-  UserId      Int       @id @default(autoincrement())
-  FirstName   String    @db.VarChar(255)
-  LastName    String    @db.VarChar(255)
-  Email       String    @unique(map: "Email") @db.VarChar(255)
-  HashKey     String    @db.VarChar(255)
-  CreatedDate DateTime? @default(now()) @db.DateTime(0)
-  LastEdited  DateTime? @default(now()) @db.DateTime(0)
+model Product {
+  ProductId       Int               @id @default(autoincrement()) @db.UnsignedInt
+  TypeId          Int               @db.UnsignedInt
+  Name            String            @db.TinyText
+  Description     String?           @db.Text
+  ProductCategory ProductCategory[] @relation("ProductCat")
+  ProductPrice    ProductPrice[]    @relation("ProductPrice")
+  ProductContent  ProductContent[]  @relation("ProductContent")
+}
 
-  @@map("_dccca3ef_b075_5080_8e01_4ba155d633c3_20230226220922_vrepl")
+model ProductCategory {
+  ProductId  Int      @db.UnsignedInt
+  CategoryId Int      @db.UnsignedInt
+  Category   Category @relation("ProdCategory", fields: [CategoryId], references: [CategoryId])
+  Product    Product  @relation("ProductCat", fields: [ProductId], references: [ProductId])
+
+  @@id([ProductId, CategoryId])
+}
+
+model ProductContent {
+  Sequence        Int     @db.UnsignedTinyInt
+  ProductId       Int     @db.UnsignedInt
+  TypeId          Int     @db.UnsignedInt
+  ContentLocation String  @db.VarChar(255)
+  Product         Product @relation("ProductContent", fields: [ProductId], references: [ProductId])
+
+  @@id([Sequence, ProductId])
+}
+
+model ProductPrice {
+  PriceId    Int       @default(autoincrement()) @db.UnsignedInt
+  ProductId  Int       @db.UnsignedInt
+  TypeId     Int       @db.UnsignedInt
+  CurrencyId Int       @db.UnsignedInt
+  Price      Decimal   @db.Decimal(15, 2)
+  StartDate  DateTime? @default(now()) @db.DateTime(0)
+  LastEdited DateTime? @default(now()) @db.DateTime(0)
+  ExpiryDate DateTime? @db.DateTime(0)
+  Currency   Currency  @relation("PriceCurrency", fields: [CurrencyId], references: [CurrencyId])
+  Product    Product   @relation("ProductPrice", fields: [ProductId], references: [ProductId])
+
+  @@id([PriceId, ProductId])
+}
+
+model Type {
+  TypeId      Int     @id @default(autoincrement()) @db.UnsignedInt
+  Name        String  @db.TinyText
+  Description String? @db.Text
+}
+
+model TypeCategory {
+  TypeId     Int @db.UnsignedInt
+  CategoryId Int @db.UnsignedInt
+
+  @@id([TypeId, CategoryId])
+}
+
+model InvoiceItem {
+  InvoiceItemId Int              @id @default(autoincrement()) @db.UnsignedInt
+  InvoiceId     Int              @db.UnsignedInt
+  ProductId     Int              @db.UnsignedInt
+  Amount        Int              @db.UnsignedInt
+  Value         Decimal          @db.Decimal(15, 2)
+  CreatedDate   DateTime?        @default(now()) @db.DateTime(0)
+  LastEdited    DateTime?        @default(now()) @db.DateTime(0)
+  Invoice       InvoiceReference @relation("InvoiceItem", fields: [InvoiceId], references: [InvoiceId])
+}
+
+model InvoiceReference {
+  InvoiceId   Int           @id @default(autoincrement()) @db.UnsignedInt
+  FromUserId  Int?
+  ToUserId    Int?
+  StatusId    Int           @db.UnsignedInt
+  CurrencyId  Int           @db.UnsignedInt
+  Value       Decimal       @db.Decimal(15, 2)
+  CreatedDate DateTime?     @default(now()) @db.DateTime(0)
+  LastEdited  DateTime?     @default(now()) @db.DateTime(0)
+  Status      Status        @relation("InvoiceStatus", fields: [StatusId], references: [StatusId])
+  Currency    Currency      @relation("InvoiceCurrency", fields: [CurrencyId], references: [CurrencyId])
+  InvoiceItem InvoiceItem[] @relation("InvoiceItem")
+}
+
+model Status {
+  StatusId         Int                @id @default(autoincrement()) @db.UnsignedInt
+  TypeId           Int                @db.UnsignedInt
+  Name             String             @db.TinyText
+  InvoiceReference InvoiceReference[] @relation("InvoiceStatus")
+}
+
+model UserWallet {
+  UserId     Int
+  CurrencyId Int         @db.UnsignedInt
+  Value      Decimal     @db.Decimal(15, 2)
+  User       UserAccount @relation("UserWallet", fields: [UserId], references: [UserId])
+  Currency   Currency    @relation("WalletCurrency", fields: [CurrencyId], references: [CurrencyId])
+
+  @@id([UserId, CurrencyId])
 }

@@ -28,7 +28,7 @@ export const getServerSideProps = withSessionSsr(
   }
 )
 
-export default function user({isLoggedIn, isAdmin}) {
+export default function user({ isLoggedIn }) {
 
 	const router = useRouter()
 	const [isSignupVisible, setIsSignupVisible] = useState(false)
@@ -71,7 +71,7 @@ export default function user({isLoggedIn, isAdmin}) {
 	}
 
 	return (
-		<Layout position="inherit">
+		<Layout position="inherit" isLoggedIn={isLoggedIn}>
 			<h1 style={{ textAlign: 'center' }}>User Module</h1>
 			{!isLoggedIn && <div>
 				<div style={{ display: 'flex' }}>

@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import {Layout, Card} from '../components'
+import { Layout, Card } from '../components'
 
 export default function index() {
+
 	return (
 	<Layout>
 		<div>
@@ -14,11 +15,11 @@ export default function index() {
 
 			<br/>
 			<div>
-				<p>I took part in several <Link href='/projects'>projects</Link></p>
+				<h4>I took part in several <Link href='https://www.pythys.com/portfolio'><b>projects</b></Link></h4>
 				<p>In the span of 3 years I worked with <a href="https://www.pythys.com/">Pythys</a> and shared alot of their success.
 				It is mainly where I gained most of my expertise having to work on both web and mobile apps.
 				My most recent experience is with <a href="https://www.gigtakaful.com.kw/">GIG - Takaful</a>, single-handedly working on a new web app solution from A to Z.
-				It is in its final stage of development but I can't share its content yet.
+				Currently in its final stage of development but I can't share its content yet.
 				</p>
 			</div>
 
@@ -33,11 +34,11 @@ export default function index() {
 			
 			<Card url='/ecommerce'>
 				<div>Next up is the <b>E-commerce Module</b></div>
-				<p>Once logged in, you will be allowed to add products to your cart and complete the checkout proccess</p>
+				<p>Once logged in, you will be allowed to purchase products, gain points in your wallet and review transaction history</p>
 				<ol>
-					<li>Login</li>
-					<li>Add to cart</li>
-					<li>Checkout</li>
+					<li>Log in</li>
+					<li>Find a package you like</li>
+					<li>Buy Now</li>
 					<li>Pay (Demo: Test success and failure cases)</li>
 					<li>Review order history</li>
 				</ol>
