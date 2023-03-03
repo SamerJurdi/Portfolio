@@ -38,7 +38,7 @@ export default function Layout(props) {
 	return (
         <div ref={ref} style={layoutHeight > height ? { position: 'relative' } : {}}>
 			<Head>
-				<title>This is a title</title>
+				<title>Samer Jurdi's Portfolio</title>
 				<link rel="icon" href="/logo.svg" /* logo => Next.js icon by icons8.com */ />
 			</Head>
 			<Image
