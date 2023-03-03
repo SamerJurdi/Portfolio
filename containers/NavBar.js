@@ -33,7 +33,10 @@ export default function NavBar({ navItems, userItems, isLoggedIn }) {
     }, [isLoggedIn])
 
     return (
-        <header>
+        <header onWheel={() => {
+            setIsNavActive(false)
+            setUserDrawerIsOpen(false)
+        }}>
             <nav style={styles.nav}>
                 <FontAwesomeIcon icon={faBars} style={styles.navBars}
                     onClick={() => {
