@@ -4,7 +4,6 @@ import getStyles from '../styles/home.module.css'
 
 export default function ProductCard(props) {
     const {
-        productId,
         productName,
         productImage,
         discountPrice,
@@ -38,9 +37,7 @@ export default function ProductCard(props) {
                     ...styles.buyNowButton,
                     ...(isButtonLit ? { background: 'lightgreen' } : {})
                 }}
-                onClick={() => {
-                    onClick(productId, discountPrice?.PriceId || currentPrice.PriceId)
-                }}
+                onClick={onClick}
                 onMouseEnter={() => lightButton(true)}
                 onMouseLeave={() => lightButton(false)}
             >Buy Now</button>
