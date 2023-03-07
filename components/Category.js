@@ -1,20 +1,21 @@
 import { useState } from 'react'
 import getStyles from '../styles/home.module.css'
 
-export default function Category({ category, onClick, isSelected }) {
+export default function Category(props) {
+	const { categoryId, categoryName, onClick, isSelected } = props
 	const styles = getStyles()
 	const [isHovering, setIsHovering] = useState(false)
 
 	return (
-		<div key={category.CategoryId}
-			onClick={() => onClick(category.CategoryId)}
+		<div key={categoryId}
+			onClick={() => onClick(categoryId)}
 			onMouseEnter={() => setIsHovering(true)}
 			onMouseLeave={() => setIsHovering(false)}
 			style={{
 				...(styles.category),
 				...((isHovering || isSelected) && styles.categorySelected)
 			}}>
-			<b>{category.Name}</b>
+			<b>{categoryName}</b>
 		</div>
 	)
 }

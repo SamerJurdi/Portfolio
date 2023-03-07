@@ -80,7 +80,9 @@ export default function ecommerce({ isLoggedIn }) {
 			<div>
 				<div style={styles.categories}>
 					{categories.length > 0 && categories.map(category => (
-						<Category key={category.CategoryId} category={category}
+						<Category key={category.CategoryId}
+							categoryId={category.CategoryId}
+							categoryName={category.Name}
 							onClick={getCategoryProducts} isSelected={category.IsSelected} />
 					))}
 				</div>
@@ -88,7 +90,12 @@ export default function ecommerce({ isLoggedIn }) {
 				{<div className="products">
 					{categories.find(category => category.IsSelected)
 						?.Products.map(product =>
-							<ProductCard key={product.ProductId} product={product}
+							<ProductCard key={product.ProductId}
+								productId={product.ProductId}
+								productName={product.Name}
+								productImage={product.DisplayImage}
+								discountPrice={product.DiscountPrice}
+								currentPrice={product.CurrentPrice}
 								onClick={buyProduct} />
 						)
 					}
