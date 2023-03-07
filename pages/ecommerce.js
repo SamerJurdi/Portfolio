@@ -80,7 +80,9 @@ export default function ecommerce({ isLoggedIn }) {
 			<div>
 				<div style={styles.categories}>
 					{categories.length > 0 && categories.map(category => (
-						<Category key={category.CategoryId} category={category}
+						<Category key={category.CategoryId}
+							categoryId={category.CategoryId}
+							categoryName={category.Name}
 							onClick={getCategoryProducts} isSelected={category.IsSelected} />
 					))}
 				</div>
