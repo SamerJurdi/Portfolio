@@ -2,13 +2,13 @@ import { useState } from 'react'
 import getStyles from '../styles/home.module.css'
 
 export default function Category(props) {
-	const { categoryId, categoryName, onClick, isSelected } = props
+	const { categoryName, onClick, isSelected } = props
 	const styles = getStyles()
 	const [isHovering, setIsHovering] = useState(false)
 
 	return (
-		<div key={categoryId}
-			onClick={() => onClick(categoryId)}
+		<div
+			onClick={onClick}
 			onMouseEnter={() => setIsHovering(true)}
 			onMouseLeave={() => setIsHovering(false)}
 			style={{

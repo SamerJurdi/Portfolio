@@ -5,23 +5,20 @@ import useWindowDimensions from '../hook/useWindowDimensions'
 import { NavBar } from '../containers'
 import getStyles from '../styles/home.module.css'
 
+const originalNavItems = [
+    { title: "Home", path: "/" },
+    { title: "Projects", path: "https://www.pythys.com/portfolio" },
+    { title: "User Module", path: "/user" },
+    { title: "E-commerce Module", path: "/ecommerce" },
+    { title: "Auction Module", path: "/auctions" },
+]
+const originalUserItems = [
+    { title: "User Info", path: "/user" },
+    { title: "Store", path: "/ecommerce" },
+    { title: "Transaction History", path: "/transaction-history" },
+    { title: "Auctions", path: "/auctions" },
+]
 export default function Layout(props) {
-    const originalNavItems = [
-        { title: "Home", path: "/" },
-        { title: "Projects", path: "https://www.pythys.com/portfolio" },
-        { title: "User Module", path: "/user" },
-        { title: "E-commerce Module", path: "/ecommerce" },
-        { title: "Auction Module", path: "/auctions" },
-    ]
-    const originalUserItems = [
-        { title: "User Info", path: "/user" },
-        { title: "Store", path: "/ecommerce" },
-        { title: "Transaction History", path: "/transaction-history" },
-        { title: "Auctions", path: "/auctions" },
-    ]
-    const { height } = useWindowDimensions()
-    const ref = useRef(null)
-    const [layoutHeight, setLayoutHeight] = useState(ref.current?.clientHeight)
     const {
         children,
         navItems = originalNavItems,
@@ -29,7 +26,10 @@ export default function Layout(props) {
         isLoggedIn = false,
         refreshLayout,
     } = props
+    const { height } = useWindowDimensions()
+    const ref = useRef(null)
     const styles = getStyles()
+    const [layoutHeight, setLayoutHeight] = useState(ref.current?.clientHeight)
 
     useEffect(() => {
         setLayoutHeight(ref.current?.clientHeight)

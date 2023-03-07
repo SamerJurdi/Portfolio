@@ -34,3 +34,21 @@ body {
         border-radius: 20px;
     }
 }
+
+.auctionCardWide {
+    display: none;
+}
+
+.auctionCard {
+    display: flex;
+}
+
+@media screen and (min-width: 750px) {
+    .auctionCardWide {
+        display: flex;
+    }
+
+    .auctionCard {
+        display: none;
+    }
+}
