@@ -88,7 +88,12 @@ export default function ecommerce({ isLoggedIn }) {
 				{<div className="products">
 					{categories.find(category => category.IsSelected)
 						?.Products.map(product =>
-							<ProductCard key={product.ProductId} product={product}
+							<ProductCard key={product.ProductId}
+								productId={product.ProductId}
+								productName={product.Name}
+								productImage={product.DisplayImage}
+								discountPrice={product.DiscountPrice}
+								currentPrice={product.CurrentPrice}
 								onClick={buyProduct} />
 						)
 					}

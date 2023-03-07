@@ -2,38 +2,44 @@ import { useState } from 'react'
 import Image from 'next/image'
 import getStyles from '../styles/home.module.css'
 
-export default function ProductCard({ product, onClick }) {
+export default function ProductCard(props) {
+    const {
+        productId,
+        productName,
+        productImage,
+        discountPrice,
+        currentPrice,
+        onClick,
+    } = props
     const styles = getStyles()
     const [isButtonLit, lightButton] = useState(false)
-    const discount = product.DiscountPrice
-    const currentPrice = product.CurrentPrice
 
     return (<div style={styles.productCard}>
-        <Image width="100" height="100" src={product?.DisplayImage || '/NoImage.svg'} alt="" />
+        <Image width="100" height="100" src={productImage || '/NoImage.svg'} alt="" />
         <div style={{ display: 'grid', alignItems: 'center', gridTemplateRows: '1fr' }}>
-            <div style={{ textAlign: 'center' }}>{product.Name}</div>
+            <div style={{ textAlign: 'center' }}>{productName}</div>
         </div>
         <div
             style={{
                 ...styles.buyNowContainer,
-                ...(!discount?.Price && { gridTemplateRows: '1fr 1fr' })
+                ...(!discountPrice?.Price && { gridTemplateRows: '1fr 1fr' })
             }}
         >
-            {discount?.Price
+            {discountPrice?.Price
                 ? <s style={{ textAlign: 'center', color: 'red' }}>
                     {currentPrice.Currency.Name}  {currentPrice.Price}</s>
                 : <div style={{ textAlign: 'center', color: 'green' }}>
                     {currentPrice.Currency.Name} {currentPrice.Price}</div>}
-            {discount?.Price
+            {discountPrice?.Price
                 && <div style={{ textAlign: 'center', color: 'green' }}>
-                    {discount?.Currency.Name} {discount?.Price}</div>}
+                    {discountPrice?.Currency.Name} {discountPrice?.Price}</div>}
             <button
                 style={{
                     ...styles.buyNowButton,
                     ...(isButtonLit ? { background: 'lightgreen' } : {})
                 }}
                 onClick={() => {
-                    onClick(product.ProductId, discount?.PriceId || currentPrice.PriceId)
+                    onClick(productId, discountPrice?.PriceId || currentPrice.PriceId)
                 }}
                 onMouseEnter={() => lightButton(true)}
                 onMouseLeave={() => lightButton(false)}
