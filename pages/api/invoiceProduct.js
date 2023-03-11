@@ -106,7 +106,7 @@ async function invoiceProduct(req, res) {
 			if (product.TypeId == 1) {// If purchasing a virtual currency
 				generateInvoice(null, UserId, price.CurrencyId, parseFloat(price.Price)) // Invoice to user deducting from their balance
 				const virtualValue = product.ProductPrice.find(prodPrice => prodPrice.TypeId == 11) // The amount of virtual points awarded on purchase, based on currency
-				virtualValue?.Price && generateInvoice(UserId, null, virtualValue.CurrencyId, parseFloat(virtualValue.Price)) // Invoice from user adding to their balance
+				isPaid && virtualValue?.Price && generateInvoice(UserId, null, virtualValue.CurrencyId, parseFloat(virtualValue.Price)) // Invoice from user adding to their balance
 			} else generateInvoice(null, UserId, price.CurrencyId, parseFloat(price.Price))
 
 			res.status(200).send({ message: isPaid ? 'Purchase Successful' : 'Purchase Failed', redirect: '/transaction-history' })

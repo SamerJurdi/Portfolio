@@ -39,7 +39,7 @@ async function login(req, res) {
 						req.session.user = { userId: user.UserId }
 						await req.session.save()
 						await updateLoginAttempts(user.UserId, 5)
-						res.status(200).send({ redirect: '/ecommerce' })
+						res.status(200).send({ reload: true })
 					} else {
 						await updateLoginAttempts(user.UserId, user.RemainingAttempts - 1)
 						res.status(200).send({ error: true, message: 'Login Failed' })

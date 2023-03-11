@@ -4,6 +4,19 @@ import { withSessionRoute } from '../../lib/config/withSession'
 export default withSessionRoute(getPackageCategories)
 
 async function getPackageCategories(req, res) {
+	const { currencyId } = req.query
+	console.log('Server')
+	console.log(currencyId)
+	let CurrencyId = currencyId ? parseInt(currencyId) : 2
+	const UserId = req.session.user?.userId
+	if (UserId && !currencyId) {
+		await prisma.UserAccount.findUnique({
+			where: { UserId },
+			include: {
+				Currency: true,
+			}
+		}).then(response => CurrencyId = response.Currency.CurrencyId)
+	}
 	const now = new Date()
 	const categories = await prisma.Category.findMany({
 		where: {
@@ -17,7 +30,7 @@ async function getPackageCategories(req, res) {
 							ProductPrice: {
 								where: {
 									AND: {
-										CurrencyId: 2,
+										CurrencyId,
 										OR: [
 											{
 												ExpiryDate: {

@@ -31,7 +31,7 @@ export default async function handle(req, res) {
 					req.session.destroy()
 					req.session.user = { userId: await response.UserId }
 					await req.session.save()
-					res.status(200).send({redirect: '/'})
+					res.status(200).send({ reload: true })
 				})
 			} catch (error) {
 				res.status(200).send({ error, message: 'Error: ' + error })

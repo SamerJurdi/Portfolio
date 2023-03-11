@@ -17,15 +17,17 @@ model UserAccount {
   CreatedDate       DateTime?    @default(now()) @db.DateTime(0)
   LastEdited        DateTime?    @default(now()) @db.DateTime(0)
   RemainingAttempts Int?         @default(5) @db.TinyInt
+  CurrencyId        Int          @default(3) @db.UnsignedInt
+  Currency          Currency     @relation("PreferredCurrency", fields: [CurrencyId], references: [CurrencyId])
   UserWallet        UserWallet[] @relation("UserWallet")
 }
 
 model Category {
   CategoryId       Int               @id @default(autoincrement()) @db.UnsignedInt
-  ParentCategoryId Int?              @db.UnsignedInt @unique
+  ParentCategoryId Int?              @db.UnsignedInt
   Name             String            @db.TinyText
   ParentCategory   Category?         @relation("ParentChild", fields: [ParentCategoryId], references: [CategoryId], onDelete: NoAction, onUpdate: NoAction)
-  Category         Category?         @relation("ParentChild")
+  Category         Category[]        @relation("ParentChild")
   ProductCategory  ProductCategory[] @relation("ProdCategory")
 }
 
@@ -38,6 +40,7 @@ model Currency {
   ProductPrice     ProductPrice[]     @relation("PriceCurrency")
   UserWallet       UserWallet[]       @relation("WalletCurrency")
   InvoiceReference InvoiceReference[] @relation("InvoiceCurrency")
+  UserAccount      UserAccount[]      @relation("PreferredCurrency")
 }
 
 model Product {
@@ -48,6 +51,7 @@ model Product {
   ProductCategory ProductCategory[] @relation("ProductCat")
   ProductPrice    ProductPrice[]    @relation("ProductPrice")
   ProductContent  ProductContent[]  @relation("ProductContent")
+  Auction         Auction[]         @relation("ProductAuction")
 }
 
 model ProductCategory {
@@ -109,17 +113,18 @@ model InvoiceItem {
 }
 
 model InvoiceReference {
-  InvoiceId   Int           @id @default(autoincrement()) @db.UnsignedInt
-  FromUserId  Int?
-  ToUserId    Int?
-  StatusId    Int           @db.UnsignedInt
-  CurrencyId  Int           @db.UnsignedInt
-  Value       Decimal       @db.Decimal(15, 2)
-  CreatedDate DateTime?     @default(now()) @db.DateTime(0)
-  LastEdited  DateTime?     @default(now()) @db.DateTime(0)
-  Status      Status        @relation("InvoiceStatus", fields: [StatusId], references: [StatusId])
-  Currency    Currency      @relation("InvoiceCurrency", fields: [CurrencyId], references: [CurrencyId])
-  InvoiceItem InvoiceItem[] @relation("InvoiceItem")
+  InvoiceId      Int              @id @default(autoincrement()) @db.UnsignedInt
+  FromUserId     Int?
+  ToUserId       Int?
+  StatusId       Int              @db.UnsignedInt
+  CurrencyId     Int              @db.UnsignedInt
+  Value          Decimal          @db.Decimal(15, 2)
+  CreatedDate    DateTime?        @default(now()) @db.DateTime(0)
+  LastEdited     DateTime?        @default(now()) @db.DateTime(0)
+  Status         Status           @relation("InvoiceStatus", fields: [StatusId], references: [StatusId])
+  Currency       Currency         @relation("InvoiceCurrency", fields: [CurrencyId], references: [CurrencyId])
+  InvoiceItem    InvoiceItem[]    @relation("InvoiceItem")
+  AuctionInvoice AuctionInvoice[] @relation("AuctionInvoice")
 }
 
 model Status {
@@ -137,4 +142,41 @@ model UserWallet {
   Currency   Currency    @relation("WalletCurrency", fields: [CurrencyId], references: [CurrencyId])
 
   @@id([UserId, CurrencyId])
+}
+
+model Auction {
+  AuctionId      Int              @id @default(autoincrement()) @db.UnsignedInt
+  ProductId      Int              @db.UnsignedInt
+  MinBid1        Decimal          @db.Decimal(15, 2)
+  MinBid2        Decimal          @db.Decimal(15, 2)
+  MinBid3        Decimal          @db.Decimal(15, 2)
+  MinBid4        Decimal          @db.Decimal(15, 2)
+  StartDate      DateTime?        @default(now()) @db.DateTime(0)
+  ExpiryDate     DateTime?        @db.DateTime(0)
+  CreatedDate    DateTime?        @default(now()) @db.DateTime(0)
+  EditTime       DateTime?        @default(now()) @db.DateTime(0)
+  Product        Product          @relation("ProductAuction", fields: [ProductId], references: [ProductId])
+  AuctionInvoice AuctionInvoice[] @relation("Auction")
+}
+
+model AuctionInvoice {
+  AuctionId Int              @db.UnsignedInt
+  InvoiceId Int              @db.UnsignedInt
+  Auction   Auction          @relation("Auction", fields: [AuctionId], references: [AuctionId])
+  Invoice   InvoiceReference @relation("AuctionInvoice", fields: [InvoiceId], references: [InvoiceId])
+
+  @@id([AuctionId, InvoiceId])
+}
+
+model b1dd_4e510e2f9c0e_20230311190944_vrepl {
+  UserId            Int       @id @default(autoincrement())
+  FirstName         String    @db.VarChar(255)
+  LastName          String    @db.VarChar(255)
+  Email             String    @unique(map: "Email") @db.VarChar(255)
+  HashKey           String    @db.VarChar(255)
+  CreatedDate       DateTime? @default(now()) @db.DateTime(0)
+  LastEdited        DateTime? @default(now()) @db.DateTime(0)
+  RemainingAttempts Int?      @default(5) @db.TinyInt
+
+  @@map("_36771885_0620_5786_b1dd_4e510e2f9c0e_20230311190944_vrepl")
 }
