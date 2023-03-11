@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { withSessionSsr } from '../lib/config/withSession'
 import { handleResponse } from '../lib/common'
 import { Layout, Category, ProductCard } from '../components'
+import { CurrencySelector } from '../containers'
 import getStyles from '../styles/home.module.css'
 
 export const getServerSideProps = withSessionSsr(
@@ -59,6 +60,17 @@ export default function ecommerce({ isLoggedIn }) {
 			router.push('/user')
 		}
 	}
+	async function updateCategories(currencyId) {
+		fetch("/api/getPackageCategories?currencyId=" + currencyId, {
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		})
+			.then(async response => {
+				let resp = await response.json()
+				setCategories(resp.categories)
+				handleResponse(resp, router)
+			})
+	}
 	
 	useEffect(() => {
         fetch("/api/getPackageCategories", {
@@ -75,8 +87,12 @@ export default function ecommerce({ isLoggedIn }) {
 	if (isLoading) return <div>Loading</div> // TODO: add loading animation
 	return (
 		<Layout isLoggedIn={isLoggedIn}>
-			<h1 style={{ textAlign: 'center' }}>E-commerce Module</h1>
-			<h3 style={{ textAlign: 'center' }}>Select a package that best suits you!</h3>
+			<div style={{ textAlign: 'center' }}>
+				<h1>E-commerce Module</h1>
+				<h3>Select a package that best suits you!</h3>
+				<CurrencySelector updatePrices={(id) => updateCategories(id)} />
+			</div>
+			<br/>
 			<div>
 				<div style={styles.categories}>
 					{categories.length > 0 && categories.map(category => (
