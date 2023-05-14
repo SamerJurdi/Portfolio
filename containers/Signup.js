@@ -19,7 +19,7 @@ export default function login() {
             email: values.email,
             password: values.password,
         }
-        fetch('/api/signup', {
+        fetch('/api/authorization/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

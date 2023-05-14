@@ -26,7 +26,7 @@ export default function transactionHistory({ isLoggedIn }) {
 	const [userTransactions, setUserTransactions] = useState([])
 	const [refreshLayout, setRefreshLayout] = useState(false)
 	useEffect(() => {
-		fetch("/api/userTransactions", {
+		fetch("/api/ecommerce/transactions", {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
 		}).then(async response => {

@@ -1,7 +1,11 @@
-import prisma from '../../lib/prisma'
+import prisma from '../../../lib/prisma'
+import { withSessionRoute } from '../../../lib/config/withSession'
+
 const argon2 = require('argon2');
 
-export default async function handle(req, res) {
+export default withSessionRoute(handle)
+
+async function handle(req, res) {
 	if (req.method === "POST") {
 		const {
 			firstName: FirstName,

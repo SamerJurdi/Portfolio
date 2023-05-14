@@ -45,7 +45,7 @@ export default function ecommerce({ isLoggedIn }) {
 			const isPaid = confirm('Agree to simulate successful purchase and cancel for failed purchase')
 			setIsLoading(true)
 			const objectWithData = { productId, priceId, isPaid }
-			return fetch('/api/invoiceProduct', {
+			return fetch('/api/ecommerce/invoice-product', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export default function ecommerce({ isLoggedIn }) {
 		}
 	}
 	async function updateCategories(currencyId) {
-		fetch("/api/getPackageCategories?currencyId=" + currencyId, {
+		fetch("/api/ecommerce/package-categories?currencyId=" + currencyId, {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
 		})
@@ -73,7 +73,7 @@ export default function ecommerce({ isLoggedIn }) {
 	}
 	
 	useEffect(() => {
-        fetch("/api/getPackageCategories", {
+        fetch("/api/ecommerce/package-categories", {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         })

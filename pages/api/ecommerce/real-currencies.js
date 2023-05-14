@@ -1,9 +1,9 @@
-import prisma from '../../lib/prisma'
-import { withSessionRoute } from '../../lib/config/withSession'
+import prisma from '../../../lib/prisma'
+import { withSessionRoute } from '../../../lib/config/withSession'
 
-export default withSessionRoute(getRealCurrencies)
+export default withSessionRoute(handle)
 
-async function getRealCurrencies(req, res) {
+async function handle(req, res) {
 	let selectedCurrency = 2
 	const UserId = req.session.user?.userId
 	if (UserId) {

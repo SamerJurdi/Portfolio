@@ -49,7 +49,7 @@ export default function user({ isLoggedIn }) {
 		const objectWithData = {
 			password: testPassword,
 		}
-		fetch('/api/hashPassword', {
+		fetch('/api/authorization/hash-password', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export default function user({ isLoggedIn }) {
 		})
 	}
 	function logOut() {
-		fetch('/api/logout', {
+		fetch('/api/authorization/logout', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

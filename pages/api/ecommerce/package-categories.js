@@ -1,9 +1,9 @@
-import prisma from '../../lib/prisma'
-import { withSessionRoute } from '../../lib/config/withSession'
+import prisma from '../../../lib/prisma'
+import { withSessionRoute } from '../../../lib/config/withSession'
 
-export default withSessionRoute(getPackageCategories)
+export default withSessionRoute(handle)
 
-async function getPackageCategories(req, res) {
+async function handle(req, res) {
 	const { currencyId } = req.query
 	console.log('Server')
 	console.log(currencyId)

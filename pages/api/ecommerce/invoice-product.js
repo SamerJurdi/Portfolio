@@ -1,9 +1,9 @@
-import prisma from '../../lib/prisma'
-import { withSessionRoute } from '../../lib/config/withSession'
+import prisma from '../../../lib/prisma'
+import { withSessionRoute } from '../../../lib/config/withSession'
 
-export default withSessionRoute(invoiceProduct)
+export default withSessionRoute(handle)
 
-async function invoiceProduct(req, res) {
+async function handle(req, res) {
 	if (req.method === "POST") {
 		const UserId = req.session.user?.userId
 		if (UserId) {

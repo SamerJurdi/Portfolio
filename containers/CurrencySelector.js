@@ -9,7 +9,7 @@ export default function CurrencySelector({ updatePrices }) {
         setSelectedCurrency(event.target.value)
         updatePrices(event.target.value)
 
-        fetch('/api/setUserCurrency', {
+        fetch('/api/ecommerce/user-currency', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export default function CurrencySelector({ updatePrices }) {
     }
 
     useEffect(() => {
-        fetch("/api/getRealCurrencies", {
+        fetch("/api/ecommerce/real-currencies", {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         })

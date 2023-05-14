@@ -14,7 +14,7 @@ export default function NavBar({ navItems, userItems, isLoggedIn }) {
     const [userWalletItems, setUserWalletItems] = useState([])
 
     function logOut() {
-        fetch("/api/logout", {
+        fetch("/api/authorization/logout", {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         }).then(async response => handleResponse(await response.json(), router))
@@ -22,7 +22,7 @@ export default function NavBar({ navItems, userItems, isLoggedIn }) {
 
     useEffect(() => {
         if (isLoggedIn) {
-            fetch("/api/userWallet", {
+            fetch("/api/ecommerce/wallet", {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
             }).then(async response => {

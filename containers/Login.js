@@ -17,7 +17,7 @@ export default function login() {
             email: values.email,
             password: values.password,
         }
-        fetch('/api/login', {
+        fetch('/api/authorization/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
